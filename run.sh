@@ -25,19 +25,18 @@ fi
 
 JAR_NAME="fabric-server-mc.${MC_VERSION}-loader.${FABRIC_LOADER_VERSION}-launcher.${FABRIC_INSTALLER_VERSION}.jar"
 
-if [ ! -e ${JAR_NAME} ]
+if [ ! -e "block_update" && ${MC_VERSION} = "latest" ]
 then
     rm -f *.jar
     D_URL="${LOADER_URL}/${FABRIC_LOADER_VERSION}/${FABRIC_INSTALLER_VERSION}/server/jar"
-    echo $D_URL
-    echo meep
     curl -o $JAR_NAME $D_URL
 
-    mv /eula.txt .
+    echo "eula=${EULA}" > eula.txt
 
     if [ ! -z ${MC_RAM} ]
     then
         JAVA_OPTS="-Xmx${MC_RAM} ${JAVA_OPTS}"
     fi
+    touch block_update
 fi
 exec java ${JAVA_OPTS} -jar $JAR_NAME nogui
