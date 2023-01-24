@@ -9,10 +9,8 @@ ENV MC_VERSION="latest" \
 
 RUN apt-get update \
     && apt-get install -y curl jq \
-    && rm -rf /var/lib/apt/lists/* \
     && mkdir /fabricmc
 
-COPY eula.txt .
 COPY run.sh .
 
 CMD ["sh", "run.sh"]
